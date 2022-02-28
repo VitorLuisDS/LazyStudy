@@ -15,11 +15,11 @@ Console.ReadLine();
 
 void ParallelExperiment(LazyThreadSafetyMode lazyThreadSafetyMode)
 {
-    Lazy<User> user = new Lazy<User>(lazyThreadSafetyMode);
+    Lazy<User> user = new(lazyThreadSafetyMode);
 
     Parallel.For(0, 7, new ParallelOptions { MaxDegreeOfParallelism = 3 }, (i) =>
     {
-        Console.WriteLine($"#{i} Thread: {Thread.CurrentThread.ManagedThreadId:00} - HashCode: {user.Value.GetHashCode()}");
+        Console.WriteLine($"#{i} Thread: {Environment.CurrentManagedThreadId:00} - HashCode: {user.Value.GetHashCode()}");
     });
 
     Console.WriteLine("---------------");
@@ -29,8 +29,6 @@ void ParallelExperiment(LazyThreadSafetyMode lazyThreadSafetyMode)
 
 public class User
 {
-    public string Name { get; set; }
-
     public User()
     {
         Console.WriteLine("Creating user...");
